@@ -1,0 +1,23 @@
+@startuml Ledger Use Case Diagram
+
+left to right direction
+skinparam packageStyle rectangle
+actor Client as "Client of Ledger"
+
+rectangle Ledger {
+    usecase "View Historical Transactions" as UC2
+    usecase "Transfer Assets" as UC3
+    usecase "Batch Asset Transfer" as UC4
+    usecase "Change Account State" as UC6
+    usecase "Modify Past Postings" as UC8
+    usecase "Request Historical Wallet Balance" as UC12
+}
+
+Client --> UC2 : queries
+Client --> UC3 : performs
+Client --> UC4 : performs
+Client --> UC6 : modifies
+Client --> UC8 : modifies
+Client --> UC12 : queries
+
+@enduml

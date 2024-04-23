@@ -1,0 +1,6 @@
+ALTER TABLE transaction ADD COLUMN created_at TIMESTAMP;
+ALTER TABLE transaction ADD COLUMN updated_at TIMESTAMP;
+ALTER TABLE wallet ADD COLUMN created_at TIMESTAMP;
+ALTER TABLE wallet ADD COLUMN updated_at TIMESTAMP;
+ALTER TABLE account ADD COLUMN created_at TIMESTAMP;
+ALTER TABLE account ADD COLUMN updated_at TIMESTAMP;

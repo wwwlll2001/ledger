@@ -1,0 +1,55 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_LEFT_RIGHT()
+
+package com.assignment.ledger.transaction.adapter.message {
+    class TransactionConsumerConfig
+}
+package com.assignment.ledger.transaction.adapter.web {
+    class TransactionController
+    class TransactionQueryController
+}
+package com.assignment.ledger.transaction.application.ports.in {
+    interface TransactionService
+    interface TransactionQueryService
+}
+package com.assignment.ledger.transaction.application.ports.out {
+    interface TransactionRepository
+}
+package com.assignment.ledger.transaction.application.service{
+    interface TransactionSynchronizeService
+    class TransactionServiceImpl
+    class TransactionQueryServiceImpl
+    class TransactionSynchronizeServiceImpl
+}
+package com.assignment.ledger.transaction.application.service.processor{
+    interface TransactionEventProcessor
+    interface TransactionPublicEventProcessor
+    interface TransactionSynchronizeProcessor
+    class TransactionInitializedProcessor
+    class TransactionStartProcessor
+    class TransactionSynchronizeEsProcessor
+    class TransactionUpdateProcessor
+}
+
+TransactionConsumerConfig --> TransactionEventProcessor : uses
+TransactionConsumerConfig --> TransactionPublicEventProcessor : uses
+TransactionConsumerConfig --> TransactionSynchronizeProcessor : uses
+
+TransactionController --> TransactionService : uses
+TransactionQueryController --> TransactionQueryService : uses
+
+TransactionServiceImpl ..|> TransactionService : implements
+TransactionQueryServiceImpl ..|> TransactionQueryService : implements
+TransactionSynchronizeServiceImpl ..|> TransactionSynchronizeService : implements
+
+TransactionServiceImpl --> TransactionRepository : uses
+
+TransactionInitializedProcessor ..|> TransactionEventProcessor : implements
+TransactionUpdateProcessor ..|> TransactionEventProcessor : implements
+TransactionStartProcessor ..|> TransactionPublicEventProcessor : implements
+TransactionSynchronizeEsProcessor ..|> TransactionSynchronizeProcessor : implements
+
+
+@enduml

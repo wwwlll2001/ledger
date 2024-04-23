@@ -1,0 +1,40 @@
+@startuml Hexagonal_Architecture_With_Ports
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Hexagonal Architecture with Ports (Ports and Adapters)
+
+' Define skins
+skinparam component {
+    BackgroundColor Wheat
+    BorderColor Black
+    ArrowColor Olive
+}
+
+LAYOUT_LEFT_RIGHT()
+
+' Define components
+Component(application_core, "Application Core", "Java/Kotlin", "Central business logic processor of the application.")
+Component(input_port, "Input Port", "Interface", "Defines methods for data input into the application core.")
+Component(output_port, "Output Port", "Interface", "Defines methods for data output from the application core.")
+
+Component(input_adapter_rest, "REST Controller Adapter", "Spring MVC", "Handles incoming RESTful HTTP requests.")
+Component(input_adapter_messaging, "Messaging Consumer Adapter", "Kafka Listener", "Manages incoming messages/events.")
+Component(output_adapter_database, "Database Adapter", "Spring Data JPA", "Handles database operations (CRUD).")
+Component(output_adapter_messaging, "Messaging Publisher Adapter", "Kafka Producer", "Sends messages/events to other services.")
+
+ComponentDb(database, "Database", "SQL/NoSQL", "Stores application persistent data.")
+ComponentQueue(messaging_system, "Messaging System", "Kafka/ActiveMQ", "Facilitates asynchronous message passing.")
+
+
+' Define relationships
+Rel(input_adapter_rest, input_port, "Uses", "REST")
+Rel(application_core, input_port, "Implements", "Interface")
+Rel(input_adapter_messaging, input_port, "Uses", "Kafka")
+Rel(application_core, output_port, "Uses", "Interface")
+Rel(output_port, output_adapter_database, "Implements", "JDBC")
+Rel(output_port, output_adapter_messaging, "Implements", "Kafka")
+
+Rel(output_adapter_database, database, "Connects to", "JDBC")
+Rel(output_adapter_messaging, messaging_system, "Connects to", "Kafka API")
+
+@enduml

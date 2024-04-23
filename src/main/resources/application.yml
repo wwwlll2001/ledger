@@ -1,0 +1,72 @@
+spring:
+  datasource:
+    url: jdbc:mysql://mysql:3306/ledger?characterEncoding=UTF-8
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      show-sql: true
+  flyway:
+    enabled: true
+  cloud:
+    function:
+      definition: processTransaction;processPublicTransaction;synchronizeTransactionData;synchronizeWalletData
+    stream:
+      bindings:
+        processTransaction-in-0:
+          destination: transactions
+          group: transaction-consumers
+          consumer:
+            maxAttempts: 1
+        processTransaction-out-0:
+          destination: transactions
+        processPublicTransaction-in-0:
+          destination: public-transactions
+          group: public-transaction-consumers
+          consumer:
+            maxAttempts: 1
+        processPublicTransaction-out-0:
+          destination: public-transactions
+        processWallet-in-0:
+          destination: wallets
+          group: wallet-consumers
+          consumer:
+            maxAttempts: 1
+        processWallet-out-0:
+          destination: wallets
+        synchronizeTransactionData-in-0:
+          destination: transactions
+          group: transaction-data-synchronize-consumers
+        synchronizeWalletData-in-0:
+          destination: wallets
+          group: wallet-data-synchronize-consumers
+      kafka:
+        binder:
+          brokers: kafka:9092
+          configuration:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+            isolation:
+              level: read_committed
+          transaction:
+            transaction-id-prefix: tx-
+            producer:
+              configuration:
+                retries: 1
+                acks: all   # must set to all, otherwise exception happens
+  data:
+    elasticsearch:
+      client:
+        reactive:
+          endpoints: elasticsearch:9200
+  elasticsearch:
+    rest:
+      uris: http://elasticsearch:9200
+logging:
+  config: classpath:logback.xml
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+

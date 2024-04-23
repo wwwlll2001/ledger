@@ -1,0 +1,1 @@
+ALTER TABLE transaction ADD COLUMN error_code VARCHAR(100);

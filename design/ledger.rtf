@@ -1,0 +1,262 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset134 PingFangSC-Regular;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset0 Monaco;
+\f3\fnil\fcharset0 HelveticaNeue-Bold;\f4\fnil\fcharset0 HelveticaNeue-Medium;}
+{\colortbl;\red255\green255\blue255;\red13\green13\blue13;\red251\green2\blue7;\red251\green2\blue7;
+\red12\green12\blue12;\red255\green255\blue255;\red212\green20\blue102;\red20\green152\blue106;}
+{\*\expandedcolortbl;;\cssrgb\c5882\c5882\c5882;\cssrgb\c100000\c14913\c0;\cssrgb\c100000\c14913\c0;
+\cssrgb\c5098\c5098\c5098;\cssrgb\c100000\c100000\c100000;\cssrgb\c87451\c18824\c47451;\cssrgb\c0\c65098\c49020;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww9420\viewh10260\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs32 \cf2 \expnd0\expndtw0\kerning0
+\'c7\'eb\'c9\'fa\'b3\'c9\'d2\'bb\'b6\'ce\'b6\'ac\'c8\'d5\'b5\'c4\'d6\'ce\'d3\'fa\'cf\'b5\'b5\'c4\'ce\'c4\'b0\'b8\'a3\'ac\'b2\'a2\'c9\'fa\'b3\'c9\'d2\'bb\'d5\'c5\'d3\'eb\'d6\'ae\'cf\'e0\'c5\'e4\'b5\'c4\'cd\'bc\'c6\'ac\'a3\'ac\'d4\'d9\'bd\'ab\'c9\'fa\'b3\'c9\'b5\'c4\'ce\'c4\'b0\'b8\'d3\'c3
+\f1 Droid Sans Fallback
+\f0 \'d7\'d6\'cc\'e5\'cc\'ed\'bc\'d3\'b5\'bd\'cd\'bc\'c6\'ac\'c9\'cf\'a3\'ac\'d2\'aa\'c7\'f3
+\f1 \
+
+\f0 \'ce\'c4\'b0\'b8\'c0\'ef\'b5\'c4\'cb\'f9\'d3\'d0\'ce\'c4\'d7\'d6\'a3\'ac\'b6\'bc\'d2\'aa\'cf\'d4\'ca\'be\'d4\'da\'cd\'bc\'c6\'ac\'c9\'cf
+\f1 \
+
+\f0 \'ce\'c4\'d7\'d6\'bf\'c9\'d2\'d4\'bb\'bb\'d0\'d0\'a3\'ac\'d7\'a2\'d2\'e2\'bc\'c6\'cb\'e3\'bb\'bb\'d0\'d0\'ca\'b1\'a3\'ac\'d0\'e8\'d2\'aa\'bd\'ab\'cd\'bc\'c6\'ac\'b5\'c4\'cf\'f1\'cb\'d8\'b3\'a4\'b6\'c8\'bb\'bb\'cb\'e3\'b3\'c9\'d7\'d6\'b7\'fb\'b5\'c4\'bf\'ed\'b6\'c8
+\f1 \
+
+\f0 \'ce\'c4\'b0\'b8\'d2\'aa\'be\'d3\'d6\'d0\'b6\'d4\'c6\'eb
+\f1  
+\f0 \'a3\'ac\'d4\'da\'cb\'ae\'c6\'bd\'ba\'cd\'b4\'b9\'d6\'b1\'c1\'bd\'b8\'f6\'b7\'bd\'cf\'f2\'c9\'cf\
+\
+\
+2*(n) \
+\
+N = 6\
+\'d7\'d3\'bd\'da\'b5\'e3\'ca\'fd\'c1\'bf\'ca\'c7 12 \
+\'b8\'f9\'bd\'da\'b5\'e3\'ca\'fd\'c1\'bf\'ca\'c7 1\
+\'cb\'f9\'d3\'d0\'d4\'da\'c7\'b0\'bd\'da\'b5\'e3\'ca\'fd\'ca\'c7 13\
+\'d7\'ee\'ba\'f3\'d2\'bb\'b8\'f6\'b5\'c4\'d0\'f2\'ba\'c5\'bc\'b4 13 -1 = 12 = 2N\
+\'d4\'f2\'d7\'f3\'bd\'da\'b5\'e3\'ca\'c72N + 1\
+N\'b5\'c4\'b5\'da\'d2\'bb\'b8\'f6\'d7\'f3\'bd\'da\'b5\'e3\'c7\'b0\'a3\'ac\'d2\'bb\'b9\'b2\'d3\'d0 2 * \
+0 \'a1\'aa 1 2\
+1 \'a1\'aa 3 4\
+2 \'a1\'aa 5 6\
+4\'a1\'aa 7 8\
+5 \'a1\'aa 9 10\
+6 \'a1\'aa 11 12 \
+\
+\
+\
+def get_completion(messages, model="gpt-3.5-turbo-1106", temperature=0, max_tokens=300, tools=None):\
+    response = openai.chat.completions.create(\
+        model=model,\
+        messages=messages,\
+        temperature=temperature,\
+        max_tokens=max_tokens,\
+        tools=tools\
+    )\
+    return response.choices[0].message\
+\
+online assignment  by 20240427\
+\
+ledger\
+ \
+ entity\
+ account\
+     Lifecycle management (OPEN CLOSE)\
+ wallet\
+     support move\
+     \cf3 Support multiple move in one request\cf2 \
+     request should be transactional \
+\cf3      Broadcast balance change\
+     Broadcast movement happening\
+\cf2      Movement should support asynchronous mode\
+     \cf3 Support historical data query  \
+         history transaction query\
+         query balance by timestamp\cf2 \
+ movement\
+     lifecycle management \'a1\'aa no this feature   \
+     could be modified \'a3\'a8modify transaction and add posting\'a3\'a9\
+  \
+Support both synchronous and asynchronous mode\
+Database\
+    CQRS \'a3\'a8mysql \'c8\'e7\'ba\'ce\'d3\'ebES\'bc\'af\'b3\'c9\'a3\'ac\'d6\'d0\'bc\'e4\'cd\'a8\'b9\'fdkafka\'d7\'f6\'c7\'c5\'c1\'ba\'a3\'bf\'a3\'a9\
+manual\
+\
+\
+\
+\
+\cf3 CQRS\'ca\'c7\'b7\'f1\'cb\'f9\'d3\'d0\'b5\'c4\'b2\'e9\'d1\'af\'b6\'bc\'d7\'df\'b6\'c1\'bf\'e2\
+\cf2 \'ce\'ca\cf3 \'d6\'be\'c7\'c5 ES\'b2\'e9\'d1\'af\'b5\'c4common \'ca\'b5\'bc\'f9 \'bc\'b0CQRS\'b5\'c4\'ca\'b5\'cf\'d6\'b7\'bd\'ca\'bd  \'a1\'aa \'cd\'a8\'b9\'fd\'ca\'c2\'bc\'fe\'d0\'b4 ES\
+\
+\'ca\'c2\'ce\'f1\'d0\'cd\'cf\'fb\'cf\'a2\'b7\'a2\'ca\'a7\'b0\'dc\'c1\'cb\'a3\'ac\'ca\'c7\'b7\'f1\'d0\'e8\'d2\'aa\'bc\'c7\'b5\'bd\'ca\'a7\'b0\'dc\'b1\'ed \'b9\'a9\'bb\'d8\'cb\'dd\'a3\'bf\'a3\'a8\'ce\'ca\'d6\'be\'c7\'c5\'a3\'bf\'a3\'a9\'a1\'aa kafka \'ca\'c2\'ce\'f1\'d0\'cd\'cf\'fb\'cf\'a2\
+\
+Optional\
+Account\'ba\'cdTransaction\'b5\'c4\'d7\'b4\'cc\'ac\'ca\'c7\'b7\'f1\'bf\'c9\'d2\'d4\'d0\'c2\'d4\'f6\'a3\'ac\'d0\'e8\'b5\'f7\'d1\'d0\
+\
+\
+\
+\cf2 \'b4\'fa\'c2\'eb \'d7\'a2\'ca\'cd \'b2\'e2\'ca\'d4\
+ReadMe\
+Message \'b2\'c9\'d3\'c3\'b9\'fa\'bc\'ca\'b1\'ea\'d7\'bc\'b8\'f1\'ca\'bd\'a3\'ac\'b2\'ce\'bf\'bcGDMC \'a1\'aa done\cf3 \
+\
+\'bd\'a8\'b9\'a4\'b3\'cc  \'a1\'aa done\
+\'bd\'a8\'b1\'ed \'a1\'aa done\
+\'b9\'a6\'c4\'dc\'bf\'aa\'b7\'a2\
+      entity  \'a1\'aa done\
+      account\
+          \'d0\'de\'b8\'c4\'d7\'b4\'cc\'ac\
+                 Controller  \'a1\'aa done\
+                 ValidateActiveTransaction \'a1\'aa done\
+                 DTO\'bc\'d3\'c9\'cf\'c3\'b6\'be\'d9\'d6\'b5\'b5\'c4\'d0\'a3\'d1\'e9 \'a1\'aa done\
+		    ControllerAdvice\'a1\'aa done\
+                 test\'bf\'f2\'bc\'dc + test container\'a1\'aadone\
+                 Unit test\'a1\'aadone\
+\cf2       wallet\
+          \'bd\'bb\'d2\'d7\'a3\'a8\'b5\'a5\'b1\'ca\'a3\'ac\'b6\'e0\'b1\'ca\'a3\'a9\'a1\'aa> \'d2\'ec\'b2\'bd\'b7\'bd\'ca\'bd\
+            \'c2\'e4\'bf\'e2\'a3\'ac\'b7\'b5\'bb\'d8\'bd\'bb\'d2\'d7id\'ba\'cd\'d7\'b4\'cc\'ac \'a1\'aa done\
+            \'b9\'e3\'b2\'a5\'ca\'c2\'bc\'fe\'a3\'actransaction\'bf\'aa\'ca\'bc\
+		  \'c5\'e4\'d6\'c3kafka\'a3\'accloud stream \'a1\'aadone\
+                \'cc\'ed\'bc\'d3 cloud event \'b8\'a8\'d6\'fa\'c0\'e0 \'a1\'aadone\
+                \'b7\'a2\'cb\'cd\'ca\'c2\'bc\'fe \'a1\'aadone\
+                \'c5\'e4\'d6\'c3kafka test container \'a1\'aadone\
+                \'b2\'e2\'ca\'d4\'ca\'c2\'ce\'f1\'d0\'cd\'cf\'fb\'cf\'a2\'ca\'c7\'b7\'f1ok \'a1\'aadone\
+                   \'cf\'fb\'b7\'d1\'d5\'df\'d0\'e8\'d2\'aa\'c5\'e4\'d6\'c3\'b3\'c9read_committed\'b2\'c5\'c4\'dc\'b2\'bb\'ca\'d5\'b5\'bd\'ce\'b4\'cc\'e1\'bd\'bb\'b5\'c4\'cf\'fb\'cf\'a2\
+            \'b4\'a6\'c0\'ed\'bd\'bb\'d2\'d7  \'a1\'aa \cf4 TBD \'d0\'de\'b8\'c4\'ca\'c2\'ce\'f1\'c4\'a3\'ca\'bd \'a1\'aa done\cf2 \
+              \'c5\'fa\'c1\'bf\'b4\'a6\'c0\'ed\'bd\'bb\'d2\'d7\'a3\'ac\'d7\'df\'d2\'ec\'b2\'bd\'a1\'aadone\
+	     	\'c5\'d0\'b6\'cf\'d5\'cb\'bb\'a7\'d7\'b4\'cc\'ac\'ca\'c7\'b7\'f1\'ba\'cf\'b7\'a8 \'a1\'aadone\
+              \'c5\'d0\'b6\'cfwallet\'c0\'e0\'d0\'cd\'ca\'c7\'b7\'f1\'d2\'bb\'d6\'c2\'a3\'a8\'bc\'d9\'c9\'e8\'d4\'dd\'b2\'bb\'d6\'a7\'b3\'d6\'a3\'a9\'a1\'aadone\
+              \'d2\'ec\'b2\'bd\'b4\'a6\'c0\'ed\'bd\'bb\'d2\'d7 \'a1\'aa \'cc\'ed\'bc\'d3consumer  \'a1\'aadone     \
+              \'d2\'ec\'b2\'bd\'cf\'fb\'cf\'a2\'cd\'a8\'d6\'aa\'bd\'bb\'d2\'d7\'ca\'a7\'b0\'dc\
+                    \'bc\'d3\'d7\'d6\'b6\'ce fail reason \'a1\'aadone  \
+              \'d7\'aa\'d5\'cb\'b5\'c4\'cb\'f8\'b6\'a8\'b2\'df\'c2\'d4 \'a1\'aa \'c0\'d6\'b9\'db\'cb\'f8 \'a1\'aadone   \'a1\'aa \cf4 TO BE TEST \'a1\'aa done\cf2 \
+                    \'bc\'d3\'d7\'d6\'b6\'ceversion \'a1\'aadone\
+              \'b7\'a2\'cb\'cd\'ca\'c2\'bc\'fe\'a3\'ac\'bd\'bb\'d2\'d7\'b5\'c4\'b1\'e4\'bb\'af \'a1\'aadone\
+              \'d0\'de\'b8\'c4\'bd\'bb\'d2\'d7 \'a1\'aa \'b9\'e3\'b2\'a5\'b1\'e4\'b8\'fc\'a1\'aadone   \'a1\'aa need TEST \'a1\'aadone\
+               \'a1\'aa\'c4\'bf\'c7\'b0\'d6\'bb\'d7\'f6\'bd\'f0\'b6\'ee\'d0\'de\'b8\'c4 \'d3\'d0\'ca\'b1\'bc\'e4\'d7\'f6\'bd\'bb\'d2\'d7\'b7\'bd\'d0\'de\'b8\'c4\'a1\'aadone\
+\'cf\'fb\'cf\'a2\'b3\'f6\'cf\'d6\'d2\'e2\'cd\'e2\'d2\'ec\'b3\'a3\'a3\'ac\'d3\'a6\'b8\'c3\'b6\'aa\'b5\'bd\'d7\'a8\'c3\'c5\'b5\'c4topic\'c0\'ef\'bd\'f8\'d0\'d0\'b4\'a6\'c0\'ed \'a1\'aa optional\'a3\'acTBD\
+          \
+          \'b9\'e3\'b2\'a5\'d3\'e0\'b6\'ee\'b1\'e4\'b8\'fc   \'a1\'aadone\
+                \'c9\'e8\'bc\'c6\'d3\'e0\'b6\'eeevent \'a1\'aadone\
+          \'b9\'e3\'b2\'a5\'bd\'bb\'d2\'d7\'bf\'aa\'ca\'bc  \'a1\'aa done\
+          \'b2\'e2\'ca\'d4\'ca\'c2\'ce\'f1\'d0\'cd\'cf\'fb\'cf\'a2 \'a1\'aa done\
+          \'bc\'d3timestamp \'a1\'aadone\
+          \cf4 \'ca\'c2\'bc\'fe\'cc\'ed\'bc\'d3 timestamp \'a1\'aaDONE\
+		transaction dto  \'a1\'aaDONE\
+\
+          \'bd\'bb\'d2\'d7\'bf\'c9\'d2\'d4\'d7\'df\'d2\'ec\'b2\'bd(\'b0\'fc\'c0\'a8\'d0\'de\'b8\'c4\'c2\'f0\'a3\'bf \'d4\'dd\'b2\'bb\'b0\'fc\'c0\'a8)  \'a1\'aa done\cf2 \
+          \'c0\'fa\'ca\'b7\'bd\'bb\'d2\'d7\'b2\'e9\'d1\'af   \'a1\'aa\'ce\'ca\'cf\'c2\'d6\'be\'c7\'c5\'a3\'ac\'d2\'bb\'b0\'e3\'ca\'c7\'b7\'d6\'bf\'aa\'cb\'f7\'d2\'fd\'bb\'b9\'ca\'c7\'b5\'a5\'b6\'c0\'cb\'f7\'d2\'fd\
+                \'ca\'fd\'be\'dd\'bd\'f8\'b6\'c1\'bf\'e2 \'a3\'a8\'b4\'b4\'bd\'a8\'d3\'eb\'d0\'de\'b8\'c4\'bd\'bb\'d2\'d7\'b6\'bc\'d2\'aa\'d0\'b4\'a3\'a9\'a1\'aadone\
+                      \'c7\'ae\'b0\'fc\'b1\'ed  \
+                      \'bd\'bb\'d2\'d7\'b1\'ed \'a1\'aadone\
+                      \'bd\'bb\'d2\'d7\'bf\'ec\'d5\'d5\'a1\'aadone\
+                      \'c7\'ae\'b0\'fc\'bf\'ec\'d5\'d5\'a1\'aadone\
+          \'d3\'e0\'b6\'ee\'b2\'e9\'d1\'af\'a3\'ac by\'ca\'b1\'bc\'e4\'b5\'e3\
+      \'bd\'bb\'d2\'d7\
+\
+\'b2\'b9ES test container\'b2\'e2\'ca\'d4 \'a1\'aa done\
+\
+\'d3\'b2\'b1\'e0\'c2\'eb \'b3\'a3\'c1\'bf\'bb\'af \'a1\'aa done\
+\cf4 \'c8\'dd\'c6\'f7\'bb\'af  \'a1\'aadone\cf2 \
+\'bc\'af\'b3\'c9    \'a1\'aadone\
+\
+Jacoco \'a1\'aa optional\
+\'cc\'ed\'bc\'d3\'b4\'fa\'c2\'eb\'d6\'d0\'b5\'c4\'ce\'c4\'b5\'b5\'ba\'cd\'d7\'a2\'ca\'cd \'a1\'aadone\
+\
+swagger \'a1\'aadone\
+\
+\'b9\'a6\'c4\'dc\'cb\'b5\'c3\'f7\
+C4 \'bc\'dc\'b9\'b9 2 3 \'b2\'e3\
+\'bc\'bc\'ca\'f5\'d5\'bb\'cb\'b5\'c3\'f7\
+\
+\
+\'b4\'fd\'cd\'ea\'c9\'c6\'b5\'c4\'b5\'d8\'b7\'bd\
+Logging aop      \'a1\'aadone     \
+Topic \'b8\'f4\'c0\'eb \'a3\'ac \'c4\'da\'b2\'bf\'ba\'cd\'cd\'e2\'b2\'bf\
+\
+\
+\
+     \
+ES\'b9\'a6\'c4\'dc\'bf\'aa\'b7\'a2\
+Kafka\'b9\'a6\'c4\'dc\'bf\'aa\'b7\'a2\
+\'bc\'af\'b3\'c9\'b2\'e2\'ca\'d4\
+\
+\'d7\'aa\'d5\'cb\'b5\'c4\'cb\'f8\'b6\'a8\'b2\'df\'c2\'d4 \'a1\'aa \'c0\'d6\'b9\'db\'cb\'f8 \'a1\'aadone\
+JPA\'c8\'e7\'ba\'ce\'c5\'d0\'b6\'cf\'c0\'d6\'b9\'db\'cb\'f8\'ca\'a7\'b0\'dc \'a1\'aa done\
+\
+Logback \'c5\'e4\'d6\'c3 \'a1\'aa done\
+Pmd checkstyle \'c5\'e4\'d6\'c3 \
+sonar?\
+swagger \'a1\'aadone\
+consumer \'cb\'b5\'c3\'f7 \
+.testcontainer.properties \'c5\'e4\'d6\'c3\
+\
+mock service? \'a1\'aa test container \'a1\'aadone\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs28 \cf5 \cb6 \outl0\strokewidth0 \strokec5 characterEncoding=UTF-8 \'97- done\
+\
+
+\f0 \'ca\'b9\'d3\'c3
+\f2 spring cloud stream 
+\f0 \'ba\'cd
+\f2  spring kafka
+\f0 \'b5\'c4\'b1\'c8\'bd\'cf\
+\'b1\'c8\'bd\'cfmybatis\'d3\'ebjpa\
+\'c8\'e7\'ba\'ce\'bb\'f1\'c8\'a1cloudevent\'b3\'fd\'c1\'cbdata\'d2\'d4\'cd\'e2\'b5\'c4\'d4\'aa\'ca\'fd\'be\'dd\
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs32 \cf5 \cb6 \strokec5 \'d4\'da\'d2\'bb\'cc\'a8
+\f1 CI
+\f0 \'b7\'fe\'ce\'f1\'c6\'f7\'c9\'cf\'a3\'ac\'bf\'c9\'c4\'dc\'d3\'d0\'b2\'bb\'cd\'ac\'b5\'c4
+\f1 pipeline
+\f0 \'d4\'da\'cd\'ac\'ca\'b1\'c5\'dc\'b9\'b9\'bd\'a8\'ba\'cd\'b2\'e2\'ca\'d4\'a3\'ac\'c8\'e7\'b9\'fb\'b2\'c9\'d3\'c3\'c1\'cb
+\f1 reusable
+\f0 \'b5\'c4
+\f1 kafka test container
+\f0 \'a3\'ac\'c8\'e7\'ba\'ce\'d4\'da\'b2\'bb\'cd\'ac\'b5\'c4
+\f1 pipeline
+\f0 \'cd\'ac\'ca\'b1\'bd\'f8\'d0\'d0\'b5\'c4\'b2\'e2\'ca\'d4\'d6\'ae\'bc\'e4\'d7\'f6\'b8\'f4\'c0\'eb\'a3\'bf\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs28 \cf7 \cb5 \strokec7 String\cf6 \strokec6  \cf7 \strokec7 uniqueId\cf6 \strokec6  = System.getenv(\cf8 \strokec8 "CI_PIPELINE_ID"\cf6 \strokec6 ) + \cf8 \strokec8 "-kafka"\cf6 \strokec6 ;
+\f0\fs32 \cf2 \cb1 \outl0\strokewidth0 \
+\pard\pardeftab720\partightenfactor0
+\cf2           \
+\'ca\'fd\'be\'dd\'bf\'e2\'bc\'d3\'c9\'cfcreate time \'ba\'cd update time\'d7\'d6\'b6\'ce \'a1\'aa done\
+\
+\
+\'b0\'a2\'c0\'ef\'d4\'c6\'a3\'ac\'c7\'b7\'b7\'d1\'cc\'e1\'d0\'d1\
+\
+\'c9\'e8\'bc\'c6\'ce\'c4\'b5\'b5\
+\'c8\'dd\'c6\'f7\'bc\'dc\'b9\'b9\
+\'d7\'e9\'bc\'fe\'bb\'f2\'d5\'df\'c0\'e0\'cd\'bc\
+api\'cb\'b5\'c3\'f7\
+\'ca\'fd\'be\'dd\'d7\'d6\'b5\'e4\
+\
+considerations\
+\
+\
+\
+\'cf\'b5\'cd\'b3\'b5\'c4\'d2\'b5\'ce\'f1\'b2\'e3\'c3\'e6\'b4\'fd\'cd\'ea\'c9\'c6\'b5\'c4\
+\'bc\'bc\'ca\'f5\'b2\'e0\'b4\'fd\'cd\'ea\'c9\'c6\'b5\'c4\
+      Topic \'b7\'d6\'c0\'eb \'c4\'da\'cd\'e2\'b7\'d6\'c0\'eb\
+\
+      1, \'c5\'e4\'d6\'c3\'d0\'c2\'cd\'a8\'b5\'c0\
+      2\'a3\'ac\'b6\'a9\'d4\'c4\'ba\'cd\'b7\'a2\'cb\'cd\'d0\'c2topic\
+\'b8\'fc\'d0\'c2\'ce\'c4\'b5\'b5\
+\'d0\'e8\'b4\'b4\'bd\'a8public transaction topic\
+Client \'d0\'e8\'d2\'aa\'d3\'eb\'d5\'e2\'b8\'f6\'bd\'bb\'bb\'a5\
+\
+           \
+\
+\pard\pardeftab720\sa120\partightenfactor0
+
+\f3\b\fs30 \cf5 \cb6 \outl0\strokewidth0 \strokec5 Maintainability
+\f4 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs32 \cf2 \cb1 \outl0\strokewidth0 \
+\
+\
+}

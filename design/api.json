@@ -1,0 +1,592 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Ledger API",
+    "description": "Documentation of Ledger API",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Account Management",
+      "description": "manage account data, currently only support account status modification."
+    },
+    {
+      "name": "Transaction Queries",
+      "description": "Transaction query apis."
+    },
+    {
+      "name": "Transaction Management",
+      "description": "manage transaction, support start transaction and update transaction. "
+    }
+  ],
+  "paths": {
+    "/transactions/{id}": {
+      "put": {
+        "tags": [
+          "Transaction Management"
+        ],
+        "summary": "Request to update transaction.",
+        "description": "The update process will be conducted asynchronously.\nClient should subscribe relevant message to get update result.",
+        "operationId": "updateTransaction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTransactionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Internal system error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Start transaction successfully."
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "tags": [
+          "Transaction Queries"
+        ],
+        "summary": "Retrieve transactions conditionally.",
+        "description": "Retrieve history transactions.",
+        "operationId": "retrieveTransactions",
+        "parameters": [
+          {
+            "name": "fromWalletId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "toWalletId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PROCESSING",
+                "CLEARED",
+                "FAILED"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal system error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retrieve successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionListDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transaction Management"
+        ],
+        "summary": "Start transactions, support batch transaction.",
+        "description": "After transaction started, it is in \"processing\" status, the actual handling will be conducted asynchronously.\nClient should subscribe relevant message to get update result.",
+        "operationId": "startTransaction",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/StartTransactionRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Internal system error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Start transaction successfully.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StartTransactionResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StartTransactionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{id}/status": {
+      "post": {
+        "tags": [
+          "Account Management"
+        ],
+        "summary": "Change account to new status",
+        "description": "If current account is the same as the new status or active transaction belongs to this\naccount existing, the request will fail.",
+        "operationId": "changeAccountStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeAccountStatusRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Internal system error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "In valid account status or active transaction belongs to this account existing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Change successfully."
+          }
+        }
+      }
+    },
+    "/wallets/{id}/balance": {
+      "get": {
+        "tags": [
+          "wallet-query-controller"
+        ],
+        "operationId": "getWalletBalanceAt",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "queryTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResult"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResult": {
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "type": "string",
+            "enum": [
+              "UNKNOWN",
+              "RESOURCE_NOT_FOUND",
+              "INVALID_ACCOUNT_STATUS",
+              "PROCESSING_TRANSACTION_EXIST",
+              "INVALID_AMOUNT",
+              "INSUFFICIENT_FUNDS",
+              "CONCURRENT_OPERATION",
+              "WALLET_TYPE_NOT_CONSISTENT",
+              "INVALID_TRANSACTION_STATUS"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateTransactionRequest": {
+        "required": [
+          "amount",
+          "fromWalletId",
+          "toWalletId"
+        ],
+        "type": "object",
+        "properties": {
+          "fromWalletId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "toWalletId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amount": {
+            "type": "number"
+          }
+        }
+      },
+      "StartTransactionRequest": {
+        "required": [
+          "amount",
+          "fromWalletId",
+          "toWalletId"
+        ],
+        "type": "object",
+        "properties": {
+          "fromWalletId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "toWalletId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amount": {
+            "type": "number"
+          }
+        }
+      },
+      "StartTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionDto"
+            }
+          }
+        }
+      },
+      "TransactionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "fromWalletId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "toWalletId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PROCESSING",
+              "CLEARED",
+              "FAILED"
+            ]
+          },
+          "errorCode": {
+            "type": "string",
+            "enum": [
+              "UNKNOWN",
+              "RESOURCE_NOT_FOUND",
+              "INVALID_ACCOUNT_STATUS",
+              "PROCESSING_TRANSACTION_EXIST",
+              "INVALID_AMOUNT",
+              "INSUFFICIENT_FUNDS",
+              "CONCURRENT_OPERATION",
+              "WALLET_TYPE_NOT_CONSISTENT",
+              "INVALID_TRANSACTION_STATUS"
+            ]
+          },
+          "failedReason": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ChangeAccountStatusRequest": {
+        "required": [
+          "newStatus"
+        ],
+        "type": "object",
+        "properties": {
+          "newStatus": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "CLOSE"
+            ]
+          }
+        }
+      },
+      "TransactionListDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "fromWalletId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "fromWalletName": {
+            "type": "string"
+          },
+          "toWalletId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "toWalletName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PROCESSING",
+              "CLEARED",
+              "FAILED"
+            ]
+          },
+          "errorCode": {
+            "type": "string",
+            "enum": [
+              "UNKNOWN",
+              "RESOURCE_NOT_FOUND",
+              "INVALID_ACCOUNT_STATUS",
+              "PROCESSING_TRANSACTION_EXIST",
+              "INVALID_AMOUNT",
+              "INSUFFICIENT_FUNDS",
+              "CONCURRENT_OPERATION",
+              "WALLET_TYPE_NOT_CONSISTENT",
+              "INVALID_TRANSACTION_STATUS"
+            ]
+          },
+          "failedReason": {
+            "type": "string"
+          },
+          "transactionTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

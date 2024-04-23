@@ -1,0 +1,60 @@
+@startuml Ledger_Database_ER_Diagram
+left to right direction
+!define Table(name,desc) class name as "desc" << (T,white) >>
+!define primary_key(x) <u>x</u>
+hide methods
+hide stereotypes
+
+' Define tables
+Table(ledger_entity, "ledger_entity") {
+  + {field} primary_key(id) : bigint
+  --
+  .. Fields ..
+  name : varchar(255)
+}
+
+Table(account, "account") {
+  + {field} primary_key(id) : bigint
+  --
+  .. Fields ..
+  ledger_entity_id : bigint
+  name : varchar(255)
+  status : varchar(20)
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+Table(wallet, "wallet") {
+  + {field} primary_key(id) : bigint
+  --
+  .. Fields ..
+  account_id : bigint
+  name : varchar(255)
+  balance : decimal(19,4)
+  asset_type : varchar(20)
+  version : bigint
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+Table(transaction, "transaction") {
+  + {field} primary_key(id) : bigint
+  --
+  .. Fields ..
+  from_wallet_id : bigint
+  to_wallet_id : bigint
+  amount : decimal(19,4)
+  status : varchar(20)
+  failed_reason : varchar(100)
+  error_code : varchar(100)
+  version : bigint
+  created_at : timestamp
+  updated_at : timestamp
+}
+
+' Define relationships
+ledger_entity "1" -right-> "0..*" account : "has"
+account "1" -right-> "0..*" wallet : "contains"
+transaction "1" -right-> "2" wallet : "links\n(from_wallet_id, to_wallet_id)"
+
+@enduml

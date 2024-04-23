@@ -1,0 +1,1 @@
+ALTER TABLE transaction ADD COLUMN version BIGINT DEFAULT 1;

@@ -1,0 +1,24 @@
+@startuml Ledger_Container_Diagram
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+'Lay out
+LAYOUT_LEFT_RIGHT()
+'LAYOUT_AS_SKETCH()
+
+title Container Diagram for Ledger Microservice
+
+Person(client, "Client", "Uses the Ledger microservice to manage assets and movement via REST and interacts asynchronously using Kafka messages.")
+
+Container(ledger, "Ledger Microservice", "Spring Boot Application", "Handles all business logic related to asset and movement managements.")
+ContainerDb(mysql, "MySQL Database", "Relational Database", "Stores structured data: accounts, transactions, wallets, etc.")
+ContainerDb(elasticsearch, "Elasticsearch", "Search Engine", "Indexes transaction history and logs for fast searching.")
+ContainerQueue(kafka, "Kafka", "Message Broker", "Handles all event-driven operations, asynchronous messaging.")
+
+Rel(client, ledger, "start update transaction and query transaction or balances", "HTTP/REST")
+Rel(client, kafka, "Publishes and subscribes to transaction or balance events", "Asynchronous")
+
+Rel(ledger, mysql, "save and update transactions", "JDBC")
+Rel(ledger, elasticsearch, "Queries transaction and balances", "HTTP/REST")
+Rel(ledger, kafka, "Emits and listens to transaction events and balance change events", "Asynchronous")
+
+@enduml

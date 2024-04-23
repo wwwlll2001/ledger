@@ -1,0 +1,36 @@
+CREATE DATABASE IF NOT EXISTS ledger DEFAULT CHARSET=utf8mb4;
+USE ledger;
+
+-- 创建实体表
+CREATE TABLE IF NOT EXISTS ledger_entity (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+-- 创建账户表
+CREATE TABLE IF NOT EXISTS account (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ledger_entity_id BIGINT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    status VARCHAR(20) NOT NULL
+);
+
+-- 创建钱包表
+CREATE TABLE IF NOT EXISTS wallet (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    account_id BIGINT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    balance DECIMAL(19,4) NOT NULL,
+    asset_type VARCHAR(20) NOT NULL,
+    version BIGINT NOT NULL DEFAULT 1
+);
+
+-- 创建交易表
+CREATE TABLE IF NOT EXISTS transaction (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    from_wallet_id BIGINT NOT NULL,
+    to_wallet_id BIGINT NOT NULL,
+    amount DECIMAL(19,4) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    failed_reason VARCHAR(100)
+);
