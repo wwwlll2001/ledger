@@ -77,7 +77,7 @@ cd ${YOUR_PROJECT_DIRECTORY}/deploy
 3. **Modify docker-compose parameters**:
 
 
-    Open the docker-compose.yml, you need to replace the ${YOUR_HOST_IP} to the ip of your machine which will run leger 
+    Open the docker-compose.yml, you need to replace the ${YOUR_HOST_IP} to the ip of your machine which will run ledger 
 
 
 4. **Run docker-compose to launch the runtime environment**:
@@ -103,7 +103,7 @@ _**Before try the api, please prepare some basic data at first so that the ledge
 preparation scripts is under `deploy` folder which name is `init.sql`, execute the script in mysql before you try the 
 apis.**_
 
-_**Leger use `flyway` to manage the database migration, so after the ledger service started, all the tables have been 
+_**ledger use `flyway` to manage the database migration, so after the ledger service started, all the tables have been 
 created automatically, flyway scrips is under the folder ${YOUR_PROJECT_DIRECTORY}/src/main/resources/db/migration**_
 
 _**Create below two topics on the kafka before accessing the ledger service.**_
@@ -160,7 +160,7 @@ Again, the whole message format is CloudEvent format, above format is just the f
 
 **Client should monitor below type message**:
 
-- `COMPLETED`: when ledger capture the message in type INIT, leger will handle the transaction and send the COMPLETED
+- `COMPLETED`: when ledger capture the message in type INIT, ledger will handle the transaction and send the COMPLETED
 message when finish the process. The ledger client should subscribe the message to get the transaction process result.
 
 - `UPDATE_FAILED and UPDATE_SUCCESS`: after ledger finish updating transaction, the update result will be sent in these
