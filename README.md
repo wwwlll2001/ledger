@@ -2,8 +2,6 @@
 `Please check design/ledger.docx`
 *******
 
-### Structure
-
 # Development
 
 `Please note that: if you are using Windows, for all commands with ./gradlew, please use ./gradlew.bat instead`
